@@ -69,7 +69,6 @@
         $python -m pip download \
                 --dest $tmp \
                 --progress-bar off \
-                --find-links $findLinks
                 -r __extra_setup_reqs.txt \
                 -r __setup_reqs.txt
       else
@@ -77,6 +76,7 @@
         $python -m pip download \
                 --dest $tmp \
                 --progress-bar off \
+                --find-links $findLinks
                 -r __extra_setup_reqs.txt \
                 -r __setup_reqs.txt
       fi
@@ -89,7 +89,6 @@
                 $python -m pip download \
                   --dest $tmp \
                   --progress-bar off \
-                  --find-links $findLinks
                   -r __setup_reqs.txt \
                   ./source
       else
@@ -98,6 +97,7 @@
                 $python -m pip download \
                   --dest $tmp \
                   --progress-bar off \
+                  --find-links $findLinks
                   -r __setup_reqs.txt \
                   ./source
       fi
