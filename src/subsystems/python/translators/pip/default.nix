@@ -31,6 +31,8 @@
       extraSetupDeps=$(jq '[.extraSetupDeps[]] | join(" ")' -c -r $jsonInput)
       findLinks=$(jq '.findLinks' -c -r $jsonInput)
 
+      echo "Finc links values $findLinks"
+
       pythonAttr="python$(echo "$pythonVersion" |  sed 's/\.//')"
       sitePackages=$(nix eval --impure --raw --expr "(import <nixpkgs> {}).$pythonAttr.sitePackages")
 
