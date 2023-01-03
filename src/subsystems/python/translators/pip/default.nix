@@ -23,6 +23,8 @@
       # accroding to the spec, the translator reads the input from a json file
       jsonInput=$1
 
+      echo "$jsonInput"
+
       # read the json input
       outputFile=$(realpath -m $(jq '.outputFile' -c -r $jsonInput))
       source="$(jq '.source' -c -r $jsonInput)/$(jq '.project.relPath' -c -r $jsonInput)"
