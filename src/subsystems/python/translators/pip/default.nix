@@ -23,15 +23,13 @@
       # accroding to the spec, the translator reads the input from a json file
       jsonInput=$1
 
-      echo "$jsonInput"
-
       # read the json input
       outputFile=$(realpath -m $(jq '.outputFile' -c -r $jsonInput))
       source="$(jq '.source' -c -r $jsonInput)/$(jq '.project.relPath' -c -r $jsonInput)"
       name="$(jq '.project.name' -c -r $jsonInput)"
       pythonVersion=$(jq '.pythonVersion' -c -r $jsonInput)
       extraSetupDeps=$(jq '[.extraSetupDeps[]] | join(" ")' -c -r $jsonInput)
-      findLinks=$(jq '.findLinks | join(" ")' -c -r $jsonInput)
+      findLinks=$(jq '.findLinks' -c -r $jsonInput)
 
       pythonAttr="python$(echo "$pythonVersion" |  sed 's/\.//')"
       sitePackages=$(nix eval --impure --raw --expr "(import <nixpkgs> {}).$pythonAttr.sitePackages")
