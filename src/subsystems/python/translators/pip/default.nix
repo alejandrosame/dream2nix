@@ -29,7 +29,7 @@
       name="$(jq '.project.name' -c -r $jsonInput)"
       pythonVersion=$(jq '.pythonVersion' -c -r $jsonInput)
       extraSetupDeps=$(jq '[.extraSetupDeps[]] | join(" ")' -c -r $jsonInput)
-      findLinks=$(jq '.findLinks | join("")' -c -r $jsonInput)
+      findLinks=$(jq '.findLinks | join(" ")' -c -r $jsonInput)
 
       pythonAttr="python$(echo "$pythonVersion" |  sed 's/\.//')"
       sitePackages=$(nix eval --impure --raw --expr "(import <nixpkgs> {}).$pythonAttr.sitePackages")
