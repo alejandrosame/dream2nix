@@ -65,6 +65,7 @@
       echo "download setup dependencies from pyproject.toml"
       if $findLinks;
       then
+        echo "FindLinks found"
         $python -m pip download \
                 --dest $tmp \
                 --progress-bar off \
@@ -72,6 +73,7 @@
                 -r __extra_setup_reqs.txt \
                 -r __setup_reqs.txt
       else
+        echo "FindLinks not found"
         $python -m pip download \
                 --dest $tmp \
                 --progress-bar off \
@@ -82,6 +84,7 @@
       echo "download files according to requirements"
       if $findLinks;
       then
+        echo "FindLinks found"
         PYTHONPATH=$(realpath ./install/$sitePackages) \
                 $python -m pip download \
                   --dest $tmp \
@@ -90,6 +93,7 @@
                   -r __setup_reqs.txt \
                   ./source
       else
+        echo "FindLinks not found"
         PYTHONPATH=$(realpath ./install/$sitePackages) \
                 $python -m pip download \
                   --dest $tmp \
