@@ -29,6 +29,7 @@
       name="$(jq '.project.name' -c -r $jsonInput)"
       pythonVersion=$(jq '.pythonVersion' -c -r $jsonInput)
       extraSetupDeps=$(jq '[.extraSetupDeps[]] | join(" ")' -c -r $jsonInput)
+      findLinks=$(jq '.findLinks | join("")' -c -r $jsonInput)
 
       pythonAttr="python$(echo "$pythonVersion" |  sed 's/\.//')"
       sitePackages=$(nix eval --impure --raw --expr "(import <nixpkgs> {}).$pythonAttr.sitePackages")
@@ -60,19 +61,41 @@
         -r __extra_setup_reqs.txt
 
       echo "download setup dependencies from pyproject.toml"
-      $python -m pip download \
-        --dest $tmp \
-        --progress-bar off \
-        -r __extra_setup_reqs.txt \
-        -r __setup_reqs.txt
+      if $findLinks;
+      then
+        $python -m pip download \
+                --dest $tmp \
+                --progress-bar off \
+                --find-links $findLinks
+                -r __extra_setup_reqs.txt \
+                -r __setup_reqs.txt
+      else
+        $python -m pip download \
+                --dest $tmp \
+                --progress-bar off \
+                -r __extra_setup_reqs.txt \
+                -r __setup_reqs.txt
+      fi
 
       echo "download files according to requirements"
-      PYTHONPATH=$(realpath ./install/$sitePackages) \
-        $python -m pip download \
-          --dest $tmp \
-          --progress-bar off \
-          -r __setup_reqs.txt \
-          ./source
+      if $findLinks;
+      then
+        PYTHONPATH=$(realpath ./install/$sitePackages) \
+                $python -m pip download \
+                  --dest $tmp \
+                  --progress-bar off \
+                  --find-links $findLinks
+                  -r __setup_reqs.txt \
+                  ./source
+      else
+        PYTHONPATH=$(realpath ./install/$sitePackages) \
+                $python -m pip download \
+                  --dest $tmp \
+                  --progress-bar off \
+                  -r __setup_reqs.txt \
+                  ./source
+      fi
+
 
       # generate the dream lock from the downloaded list of files
       cd ./source

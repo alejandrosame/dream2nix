@@ -21,4 +21,15 @@
     ];
     type = "argument";
   };
+
+  findLinks = {
+    description = ''
+      URL to a HTML file listing wheels or sdists files to download
+    '';
+    default = "";
+    examples = [
+      "https://example.com/list-wheels/"
+    ];
+    type = "argument";
+  };
 }
