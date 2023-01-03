@@ -63,7 +63,7 @@
         -r __extra_setup_reqs.txt
 
       echo "download setup dependencies from pyproject.toml"
-      if $findLinks;
+      if [ -z "$findLinks" ];
       then
         echo "FindLinks found"
         $python -m pip download \
@@ -82,7 +82,7 @@
       fi
 
       echo "download files according to requirements"
-      if $findLinks;
+      if [ -z "$findLinks" ];
       then
         echo "FindLinks found"
         PYTHONPATH=$(realpath ./install/$sitePackages) \
