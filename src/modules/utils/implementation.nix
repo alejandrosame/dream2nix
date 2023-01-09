@@ -176,6 +176,7 @@
           gitMinimal
           nix
           python3
+          config.pkgs.glibc
         ]
         ''
           dreamLockPath="${project.dreamLockPath}"
