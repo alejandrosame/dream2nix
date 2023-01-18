@@ -247,7 +247,7 @@
                 if b.length githubUrlInfos == 9 # Alternatively check for infixes "legacy.tar.gz" and "/archive/"
                 then {
                   inherit url;
-                  rev = "refs/tag/v{version}";
+                  rev = "refs/tag/v${version}";
                 }
                 else if b.length githubUrlInfos == 7
                 then let
