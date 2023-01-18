@@ -251,7 +251,7 @@
                   url = "https://github.com/${owner}/${repo}";
                   inherit rev;
                 }
-                else if b.length githubUrlInfos == 5 || lib.hasInfix "legacy.tar.gz" rawObj.resolved
+                else if b.length githubUrlInfos == 5 || lib.hasInfix "legacy.tar.gz" rawObj.resolved || lib.hasInfix "/archive/" rawObj.resolved
                 then let
                   urlAndRev = lib.splitString "#" rawObj.resolved;
                 in {
