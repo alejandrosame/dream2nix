@@ -239,7 +239,7 @@
                 }
               else let
                 githubUrlInfos = lib.splitString "/" rawObj.resolved;
-                owner = b.trace (b.toString githubUrlInfos) (lib.elemAt githubUrlInfos 3);
+                owner = lib.elemAt githubUrlInfos 3;
                 repo = lib.elemAt githubUrlInfos 4;
               in
                 #if lib.hasInfix "codeload.github.com/" dObj.resolved
@@ -260,7 +260,8 @@
                 }
                 else
                   throw (
-                    "Unable to parse git dependency for: "
+                    "${b.toString githubUrlInfos} -> "
+                    + "Unable to parse git dependency for: "
                     + "${finalObj.name}#${finalObj.version}"
                   )
             else if type == "path"
