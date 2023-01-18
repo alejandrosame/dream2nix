@@ -267,7 +267,7 @@
                 }
                 else
                   throw (
-                    "${b.toString githubUrlInfos} -> "
+                    "${b.toString (b.length githubUrlInfos)} -> "
                     + "Unable to parse git dependency for: "
                     + "${finalObj.name}#${finalObj.version}"
                   )
