@@ -245,12 +245,9 @@
                 url = "https://github.com/${owner}/${repo}";
               in
                 if b.length githubUrlInfos == 9 # Alternatively check for infixes "legacy.tar.gz" and "/archive/"
-                then let
-                  # Misc URL is either a legacy or an archive URL
-                  miscUrlAndRev = lib.splitString "#" rawObj.resolved;
-                in {
+                then {
                   inherit url;
-                  rev = lib.last miscUrlAndRev;
+                  rev = "v{version}";
                 }
                 else if b.length githubUrlInfos == 7
                 then let
