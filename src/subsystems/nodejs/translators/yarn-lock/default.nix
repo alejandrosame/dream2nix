@@ -241,17 +241,24 @@
                 githubUrlInfos = lib.splitString "/" rawObj.resolved;
                 owner = lib.elemAt githubUrlInfos 3;
                 repo = lib.elemAt githubUrlInfos 4;
+
+                url = "https://github.com/${owner}/${repo}";
               in
-                #if lib.hasInfix "codeload.github.com/" dObj.resolved
-                #else
-                if b.length githubUrlInfos == 7
+                if b.length githubUrlInfos == 8 # Alternatively check for infixes "legacy.tar.gz" and "/archive/"
+                then let
+                  # Misc URL is either a legacy or an archive URL
+                  miscUrlAndRev = lib.splitString "#" rawObj.resolved;
+                in {
+                  inherit url;
+                  rev = lib.last miscUrlAndRev;
+                }
+                else if b.length githubUrlInfos == 7
                 then let
                   rev = lib.elemAt githubUrlInfos 6;
                 in {
-                  url = "https://github.com/${owner}/${repo}";
-                  inherit rev;
+                  inherit rev url;
                 }
-                else if b.length githubUrlInfos == 5 || lib.hasInfix "legacy.tar.gz" rawObj.resolved || lib.hasInfix "/archive/" rawObj.resolved
+                else if b.length githubUrlInfos == 5
                 then let
                   urlAndRev = lib.splitString "#" rawObj.resolved;
                 in {
